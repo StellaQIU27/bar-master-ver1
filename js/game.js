@@ -2,6 +2,127 @@
 //  BAR MASTER — Mobile Bartender Simulation (Anime Style)
 // ============================================================
 
+// ============================================================
+//  i18n — LANGUAGE SYSTEM
+// ============================================================
+const LANG = {
+    zh: {
+        title: '调酒大师', tagline: '摇 · 倾 · 搅', startBtn: '开始营业',
+        feat1: '📱 摇晃手机来调制鸡尾酒', feat2: '📐 倾斜手机制作分层特饮', feat3: '🔄 转动手机轻轻搅拌',
+        motionTitle: '体感控制', motionDesc: '本游戏需要使用手机传感器来调酒哦！',
+        motionEnable: '开启体感', motionSkip: '不使用体感',
+        catSpirits: '基酒', catLiqueurs: '利口酒', catMixers: '调配', catExtras: '辅料',
+        mixBtn: '开始调酒', clearBtn: '清空', continueBtn: '继续', nextShift: '下一班',
+        shakeInstr: '📱 摇晃手机！', layerInstr: '📐 慢慢倾斜手机！', stirInstr: '🔄 轻轻转动手机！',
+        layerPour: '📐 倾斜倒入：', layerStatus: (cur, total, name) => `第 ${cur}/${total} 层：${name}`,
+        statusKeep: '继续加油...', statusGood: '就是这个感觉！', statusTooMuch: '过头了！',
+        ratingPerfect: '完美！', ratingGreat: '不错！', ratingOk: '还行吧', ratingBad: '翻车了...',
+        tip: '小费', ingredients: '配料', mixing: '调制',
+        shiftEnd: (n) => `第 ${n} 班结束`, shiftN: (n) => `第 ${n} 班`,
+        earned: '本班收入', drinksServed: '调制杯数', totalBank: '累计收入',
+        unlockNext: '下一班将解锁新酒谱！', unlockAll: '已解锁全部酒谱！',
+        thankYou: '谢谢！', recipeMatch: (n) => `配方匹配：${n}！`, couldBe: (n) => `可能是：${n}...`,
+        noMatch: '没有匹配的配方...', orderHint: '点单：', tapCustomer: '点击顾客，然后选择配料',
+        methodShake: '摇', methodLayer: '分层', methodStir: '搅',
+        // Ingredient names
+        ing: {
+            vodka: '伏特加', tequila: '龙舌兰', rum: '朗姆酒', gin: '金酒', whiskey: '威士忌', brandy: '白兰地',
+            triple_sec: '橙皮酒', kahlua: '甘露咖啡酒', baileys: '百利甜酒', grand_m: '君度橙酒', creme_m: '薄荷甜酒',
+            lime_j: '青柠汁', orange_j: '橙汁', tomato_j: '番茄汁', cranberry_j: '蔓越莓汁', soda: '苏打水', tonic: '汤力水',
+            grenadine: '红石榴糖浆', bitters: '苦精', sugar: '糖', ice: '冰块',
+        },
+        // Drink names
+        drinks: {
+            margarita: '玛格丽特', bloody_mary: '血腥玛丽', cosmopolitan: '大都会', daiquiri: '黛绮莉',
+            b52: 'B-52轰炸机', tequila_sunrise: '龙舌兰日出', pousse_cafe: '彩虹酒',
+            highball: '嗨棒', gin_tonic: '金汤力', old_fashioned: '古典鸡尾酒',
+        },
+        // Layer names (mapped by drink id)
+        layers: {
+            b52: ['甘露咖啡酒', '百利甜酒', '君度橙酒'],
+            tequila_sunrise: ['红石榴糖浆', '橙汁', '龙舌兰'],
+            pousse_cafe: ['红石榴糖浆', '薄荷甜酒', '白兰地'],
+        },
+    },
+    en: {
+        title: 'BAR MASTER', tagline: 'shake · tilt · stir', startBtn: 'Start Shift',
+        feat1: '📱 Shake to mix cocktails', feat2: '📐 Tilt to layer drinks', feat3: '🔄 Rotate to stir',
+        motionTitle: 'Motion Sensors', motionDesc: 'This game uses your phone\'s sensors for mixing drinks!',
+        motionEnable: 'Enable Motion', motionSkip: 'Play Without Motion',
+        catSpirits: 'Spirits', catLiqueurs: 'Liqueurs', catMixers: 'Mixers', catExtras: 'Extras',
+        mixBtn: 'Mix It!', clearBtn: 'Clear', continueBtn: 'Continue', nextShift: 'Next Shift',
+        shakeInstr: '📱 Shake your phone!', layerInstr: '📐 Tilt slowly to pour!', stirInstr: '🔄 Stir gently!',
+        layerPour: '📐 Tilt to pour: ', layerStatus: (cur, total, name) => `Layer ${cur}/${total}: ${name}`,
+        statusKeep: 'Keep going...', statusGood: 'Sweet spot!', statusTooMuch: 'Too much!',
+        ratingPerfect: 'PERFECT!', ratingGreat: 'Great!', ratingOk: 'Not Bad', ratingBad: 'Yikes...',
+        tip: 'Tip', ingredients: 'Ingredients', mixing: 'Mixing',
+        shiftEnd: (n) => `Shift ${n} Complete`, shiftN: (n) => `Shift ${n}`,
+        earned: 'Earned', drinksServed: 'Drinks served', totalBank: 'Total bank',
+        unlockNext: 'New drinks unlock next shift!', unlockAll: 'Full menu unlocked!',
+        thankYou: 'Thank you!', recipeMatch: (n) => `Recipe match: ${n}!`, couldBe: (n) => `Could be: ${n}...`,
+        noMatch: 'No matching recipe...', orderHint: 'Order: ', tapCustomer: 'Tap a customer, then add ingredients',
+        methodShake: 'SHAKE', methodLayer: 'LAYER', methodStir: 'STIR',
+        ing: {
+            vodka: 'Vodka', tequila: 'Tequila', rum: 'Rum', gin: 'Gin', whiskey: 'Whiskey', brandy: 'Brandy',
+            triple_sec: 'Triple Sec', kahlua: 'Kahlua', baileys: 'Baileys', grand_m: 'Grand Marnier', creme_m: 'Cr. de Menthe',
+            lime_j: 'Lime Juice', orange_j: 'Orange Juice', tomato_j: 'Tomato Juice', cranberry_j: 'Cranberry', soda: 'Soda Water', tonic: 'Tonic Water',
+            grenadine: 'Grenadine', bitters: 'Bitters', sugar: 'Sugar', ice: 'Ice',
+        },
+        drinks: {
+            margarita: 'Margarita', bloody_mary: 'Bloody Mary', cosmopolitan: 'Cosmopolitan', daiquiri: 'Daiquiri',
+            b52: 'B-52', tequila_sunrise: 'Tequila Sunrise', pousse_cafe: 'Pousse Cafe',
+            highball: 'Highball', gin_tonic: 'Gin & Tonic', old_fashioned: 'Old Fashioned',
+        },
+        layers: {
+            b52: ['Kahlua', 'Baileys', 'Grand Marnier'],
+            tequila_sunrise: ['Grenadine', 'Orange Juice', 'Tequila'],
+            pousse_cafe: ['Grenadine', 'Creme de Menthe', 'Brandy'],
+        },
+    },
+};
+
+let currentLang = 'zh';
+function T() { return LANG[currentLang]; }
+function ingName(id) { return T().ing[id] || id; }
+function drinkName(id) { return T().drinks[id] || id; }
+function layerNames(drinkId) { return T().layers[drinkId] || []; }
+
+function applyLanguage() {
+    const t = T();
+    document.title = `${t.title} Ver1`;
+    document.querySelector('.logo').textContent = t.title;
+    document.querySelector('.tagline').textContent = t.tagline;
+    document.getElementById('start-btn').textContent = t.startBtn;
+    const features = document.querySelectorAll('.feature');
+    if (features[0]) features[0].textContent = t.feat1;
+    if (features[1]) features[1].textContent = t.feat2;
+    if (features[2]) features[2].textContent = t.feat3;
+    document.querySelector('#permission-overlay h2').textContent = t.motionTitle;
+    document.querySelector('#permission-overlay p').textContent = t.motionDesc;
+    document.getElementById('permission-btn').textContent = t.motionEnable;
+    document.getElementById('skip-perm-btn').textContent = t.motionSkip;
+    const tabs = document.querySelectorAll('.cat-tab');
+    if (tabs[0]) tabs[0].textContent = t.catSpirits;
+    if (tabs[1]) tabs[1].textContent = t.catLiqueurs;
+    if (tabs[2]) tabs[2].textContent = t.catMixers;
+    if (tabs[3]) tabs[3].textContent = t.catExtras;
+    document.getElementById('mix-btn').textContent = t.mixBtn;
+    document.getElementById('clear-btn').textContent = t.clearBtn;
+    document.getElementById('result-ok-btn').textContent = t.continueBtn;
+    document.getElementById('next-shift-btn').textContent = t.nextShift;
+    // Update ingredient display names dynamically
+    Object.keys(INGREDIENTS).forEach(id => {
+        INGREDIENTS[id].name = t.ing[id] || id;
+    });
+    // Update drink display names and layer names
+    DRINKS.forEach(d => {
+        d.name = t.drinks[d.id] || d.id;
+        if (d.layers && t.layers[d.id]) {
+            d.layers.forEach((l, i) => { l.name = t.layers[d.id][i] || l.name; });
+        }
+    });
+}
+
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 const mixCanvas = document.getElementById('mixingCanvas');
@@ -110,30 +231,30 @@ document.addEventListener('touchmove', (e) => {
 // ============================================================
 const INGREDIENTS = {
     // Spirits
-    vodka:      { name: 'Vodka',       cat: 'spirits',  icon: '🍸', color: '#e0e0e0', bg: 'rgba(200,200,220,0.15)', border: 'rgba(200,200,220,0.3)' },
-    tequila:    { name: 'Tequila',     cat: 'spirits',  icon: '🌵', color: '#f5f0c0', bg: 'rgba(245,240,192,0.15)', border: 'rgba(245,240,192,0.3)' },
-    rum:        { name: 'Rum',         cat: 'spirits',  icon: '🏴‍☠️', color: '#c8721a', bg: 'rgba(200,114,26,0.15)',  border: 'rgba(200,114,26,0.3)' },
-    gin:        { name: 'Gin',         cat: 'spirits',  icon: '🫒', color: '#d4edda', bg: 'rgba(212,237,218,0.15)', border: 'rgba(212,237,218,0.3)' },
-    whiskey:    { name: 'Whiskey',     cat: 'spirits',  icon: '🥃', color: '#c8721a', bg: 'rgba(200,114,26,0.15)',  border: 'rgba(200,114,26,0.3)' },
-    brandy:     { name: 'Brandy',      cat: 'spirits',  icon: '🍷', color: '#d4882a', bg: 'rgba(212,136,42,0.15)', border: 'rgba(212,136,42,0.3)' },
-    // Liqueurs
-    triple_sec: { name: 'Triple Sec',  cat: 'liqueurs', icon: '🍊', color: '#ffa500', bg: 'rgba(255,165,0,0.15)',  border: 'rgba(255,165,0,0.3)' },
-    kahlua:     { name: 'Kahlua',      cat: 'liqueurs', icon: '☕', color: '#3e1f0d', bg: 'rgba(62,31,13,0.3)',    border: 'rgba(62,31,13,0.5)' },
-    baileys:    { name: 'Baileys',     cat: 'liqueurs', icon: '🥛', color: '#d4a76a', bg: 'rgba(212,167,106,0.15)', border: 'rgba(212,167,106,0.3)' },
-    grand_m:    { name: 'Grand Marnier', cat: 'liqueurs', icon: '🟠', color: '#e8851a', bg: 'rgba(232,133,26,0.15)', border: 'rgba(232,133,26,0.3)' },
-    creme_m:    { name: 'Cr. de Menthe', cat: 'liqueurs', icon: '🟢', color: '#44cc88', bg: 'rgba(68,204,136,0.15)', border: 'rgba(68,204,136,0.3)' },
-    // Mixers
-    lime_j:     { name: 'Lime Juice',  cat: 'mixers',   icon: '🍋', color: '#a8e06c', bg: 'rgba(168,224,108,0.15)', border: 'rgba(168,224,108,0.3)' },
-    orange_j:   { name: 'Orange Juice', cat: 'mixers',  icon: '🍊', color: '#ffa500', bg: 'rgba(255,165,0,0.15)',  border: 'rgba(255,165,0,0.3)' },
-    tomato_j:   { name: 'Tomato Juice', cat: 'mixers',  icon: '🍅', color: '#cc3333', bg: 'rgba(204,51,51,0.15)',  border: 'rgba(204,51,51,0.3)' },
-    cranberry_j:{ name: 'Cranberry',   cat: 'mixers',   icon: '🫐', color: '#cc3366', bg: 'rgba(204,51,102,0.15)', border: 'rgba(204,51,102,0.3)' },
-    soda:       { name: 'Soda Water',  cat: 'mixers',   icon: '💧', color: '#c0e8ff', bg: 'rgba(192,232,255,0.15)', border: 'rgba(192,232,255,0.3)' },
-    tonic:      { name: 'Tonic Water', cat: 'mixers',   icon: '🫧', color: '#d0f0ff', bg: 'rgba(208,240,255,0.15)', border: 'rgba(208,240,255,0.3)' },
-    // Extras
-    grenadine:  { name: 'Grenadine',   cat: 'extras',   icon: '🔴', color: '#cc1100', bg: 'rgba(204,17,0,0.15)',   border: 'rgba(204,17,0,0.3)' },
-    bitters:    { name: 'Bitters',     cat: 'extras',   icon: '💛', color: '#c8721a', bg: 'rgba(200,114,26,0.15)', border: 'rgba(200,114,26,0.3)' },
-    sugar:      { name: 'Sugar',       cat: 'extras',   icon: '🍬', color: '#fff5e6', bg: 'rgba(255,245,230,0.15)', border: 'rgba(255,245,230,0.3)' },
-    ice:        { name: 'Ice',         cat: 'extras',   icon: '🧊', color: '#aadcff', bg: 'rgba(170,220,255,0.15)', border: 'rgba(170,220,255,0.3)' },
+    vodka:      { name: '伏特加',      cat: 'spirits',  icon: '🍸', color: '#e0e0e0', bg: 'rgba(200,200,220,0.15)', border: 'rgba(200,200,220,0.3)' },
+    tequila:    { name: '龙舌兰',      cat: 'spirits',  icon: '🌵', color: '#f5f0c0', bg: 'rgba(245,240,192,0.15)', border: 'rgba(245,240,192,0.3)' },
+    rum:        { name: '朗姆酒',      cat: 'spirits',  icon: '🏴‍☠️', color: '#c8721a', bg: 'rgba(200,114,26,0.15)',  border: 'rgba(200,114,26,0.3)' },
+    gin:        { name: '金酒',        cat: 'spirits',  icon: '🫒', color: '#d4edda', bg: 'rgba(212,237,218,0.15)', border: 'rgba(212,237,218,0.3)' },
+    whiskey:    { name: '威士忌',      cat: 'spirits',  icon: '🥃', color: '#c8721a', bg: 'rgba(200,114,26,0.15)',  border: 'rgba(200,114,26,0.3)' },
+    brandy:     { name: '白兰地',      cat: 'spirits',  icon: '🍷', color: '#d4882a', bg: 'rgba(212,136,42,0.15)', border: 'rgba(212,136,42,0.3)' },
+    // 利口酒
+    triple_sec: { name: '橙皮酒',      cat: 'liqueurs', icon: '🍊', color: '#ffa500', bg: 'rgba(255,165,0,0.15)',  border: 'rgba(255,165,0,0.3)' },
+    kahlua:     { name: '甘露咖啡酒',  cat: 'liqueurs', icon: '☕', color: '#3e1f0d', bg: 'rgba(62,31,13,0.3)',    border: 'rgba(62,31,13,0.5)' },
+    baileys:    { name: '百利甜酒',    cat: 'liqueurs', icon: '🥛', color: '#d4a76a', bg: 'rgba(212,167,106,0.15)', border: 'rgba(212,167,106,0.3)' },
+    grand_m:    { name: '君度橙酒',    cat: 'liqueurs', icon: '🟠', color: '#e8851a', bg: 'rgba(232,133,26,0.15)', border: 'rgba(232,133,26,0.3)' },
+    creme_m:    { name: '薄荷甜酒',    cat: 'liqueurs', icon: '🟢', color: '#44cc88', bg: 'rgba(68,204,136,0.15)', border: 'rgba(68,204,136,0.3)' },
+    // 调配
+    lime_j:     { name: '青柠汁',      cat: 'mixers',   icon: '🍋', color: '#a8e06c', bg: 'rgba(168,224,108,0.15)', border: 'rgba(168,224,108,0.3)' },
+    orange_j:   { name: '橙汁',        cat: 'mixers',   icon: '🍊', color: '#ffa500', bg: 'rgba(255,165,0,0.15)',  border: 'rgba(255,165,0,0.3)' },
+    tomato_j:   { name: '番茄汁',      cat: 'mixers',   icon: '🍅', color: '#cc3333', bg: 'rgba(204,51,51,0.15)',  border: 'rgba(204,51,51,0.3)' },
+    cranberry_j:{ name: '蔓越莓汁',    cat: 'mixers',   icon: '🫐', color: '#cc3366', bg: 'rgba(204,51,102,0.15)', border: 'rgba(204,51,102,0.3)' },
+    soda:       { name: '苏打水',      cat: 'mixers',   icon: '💧', color: '#c0e8ff', bg: 'rgba(192,232,255,0.15)', border: 'rgba(192,232,255,0.3)' },
+    tonic:      { name: '汤力水',      cat: 'mixers',   icon: '🫧', color: '#d0f0ff', bg: 'rgba(208,240,255,0.15)', border: 'rgba(208,240,255,0.3)' },
+    // 辅料
+    grenadine:  { name: '红石榴糖浆',  cat: 'extras',   icon: '🔴', color: '#cc1100', bg: 'rgba(204,17,0,0.15)',   border: 'rgba(204,17,0,0.3)' },
+    bitters:    { name: '苦精',        cat: 'extras',   icon: '💛', color: '#c8721a', bg: 'rgba(200,114,26,0.15)', border: 'rgba(200,114,26,0.3)' },
+    sugar:      { name: '糖',          cat: 'extras',   icon: '🍬', color: '#fff5e6', bg: 'rgba(255,245,230,0.15)', border: 'rgba(255,245,230,0.3)' },
+    ice:        { name: '冰块',        cat: 'extras',   icon: '🧊', color: '#aadcff', bg: 'rgba(170,220,255,0.15)', border: 'rgba(170,220,255,0.3)' },
 };
 
 // ============================================================
@@ -141,67 +262,67 @@ const INGREDIENTS = {
 // ============================================================
 const DRINKS = [
     {
-        id: 'margarita', name: 'Margarita', price: 12, method: 'shake',
+        id: 'margarita', name: '玛格丽特', price: 12, method: 'shake',
         ingredients: ['tequila', 'triple_sec', 'lime_j'],
         color: '#a8e06c', difficulty: 1, targetShakes: 60,
     },
     {
-        id: 'bloody_mary', name: 'Bloody Mary', price: 10, method: 'shake',
+        id: 'bloody_mary', name: '血腥玛丽', price: 10, method: 'shake',
         ingredients: ['vodka', 'tomato_j', 'bitters'],
         color: '#cc3333', difficulty: 1, targetShakes: 50,
     },
     {
-        id: 'cosmopolitan', name: 'Cosmopolitan', price: 13, method: 'shake',
+        id: 'cosmopolitan', name: '大都会', price: 13, method: 'shake',
         ingredients: ['vodka', 'triple_sec', 'cranberry_j', 'lime_j'],
         color: '#ff6b9d', difficulty: 2, targetShakes: 70,
     },
     {
-        id: 'daiquiri', name: 'Daiquiri', price: 11, method: 'shake',
+        id: 'daiquiri', name: '黛绮莉', price: 11, method: 'shake',
         ingredients: ['rum', 'lime_j', 'sugar'],
         color: '#f0e68c', difficulty: 2, targetShakes: 55,
     },
     {
-        id: 'b52', name: 'B-52', price: 14, method: 'layer',
+        id: 'b52', name: 'B-52轰炸机', price: 14, method: 'layer',
         ingredients: ['kahlua', 'baileys', 'grand_m'],
         layers: [
-            { name: 'Kahlua', color: '#3e1f0d' },
-            { name: 'Baileys', color: '#d4a76a' },
-            { name: 'Grand Marnier', color: '#e8851a' },
+            { name: '甘露咖啡酒', color: '#3e1f0d' },
+            { name: '百利甜酒', color: '#d4a76a' },
+            { name: '君度橙酒', color: '#e8851a' },
         ],
         color: '#d4a76a', difficulty: 3,
     },
     {
-        id: 'tequila_sunrise', name: 'Tequila Sunrise', price: 11, method: 'layer',
+        id: 'tequila_sunrise', name: '龙舌兰日出', price: 11, method: 'layer',
         ingredients: ['tequila', 'orange_j', 'grenadine'],
         layers: [
-            { name: 'Grenadine', color: '#cc1100' },
-            { name: 'Orange Juice', color: '#ffa500' },
-            { name: 'Tequila', color: '#f5f0d0' },
+            { name: '红石榴糖浆', color: '#cc1100' },
+            { name: '橙汁', color: '#ffa500' },
+            { name: '龙舌兰', color: '#f5f0d0' },
         ],
         color: '#ffa500', difficulty: 2,
     },
     {
-        id: 'pousse_cafe', name: 'Pousse Cafe', price: 16, method: 'layer',
+        id: 'pousse_cafe', name: '彩虹酒', price: 16, method: 'layer',
         ingredients: ['grenadine', 'creme_m', 'brandy'],
         layers: [
-            { name: 'Grenadine', color: '#cc1100' },
-            { name: 'Creme de Menthe', color: '#44cc88' },
-            { name: 'Brandy', color: '#d4882a' },
+            { name: '红石榴糖浆', color: '#cc1100' },
+            { name: '薄荷甜酒', color: '#44cc88' },
+            { name: '白兰地', color: '#d4882a' },
         ],
         color: '#44cc88', difficulty: 3,
     },
     {
-        id: 'highball', name: 'Highball', price: 8, method: 'stir',
+        id: 'highball', name: '嗨棒', price: 8, method: 'stir',
         ingredients: ['whiskey', 'soda', 'ice'],
         color: '#daa520', difficulty: 1, targetStirs: 40,
     },
     {
-        id: 'gin_tonic', name: 'Gin & Tonic', price: 9, method: 'stir',
+        id: 'gin_tonic', name: '金汤力', price: 9, method: 'stir',
         ingredients: ['gin', 'tonic', 'lime_j'],
         color: '#d4edda', difficulty: 1, targetStirs: 35,
     },
     {
-        id: 'old_fashioned', name: 'Old Fashioned', price: 13, method: 'stir',
+        id: 'old_fashioned', name: '古典鸡尾酒', price: 13, method: 'stir',
         ingredients: ['whiskey', 'bitters', 'sugar', 'ice'],
         color: '#c8721a', difficulty: 2, targetStirs: 55,
     },
@@ -514,7 +635,7 @@ class Customer {
         this.char = generateCharacter();
         this.drink = null;
         this.patience = 1.0;
-        this.maxPatience = 900 + Math.random() * 400;
+        this.maxPatience = 1500 + Math.random() * 600;
         this.patienceTimer = 0;
         this.state = 'entering';
         this.enterProgress = 0;
@@ -567,7 +688,7 @@ const game = {
     money: 0, totalServed: 0, shift: 1,
     shiftMoney: 0, shiftServed: 0, shiftTarget: 6,
     customers: [], maxCustomers: 3,
-    spawnTimer: 0, spawnInterval: 260, customersSpawned: 0,
+    spawnTimer: 0, spawnInterval: 360, customersSpawned: 0,
     activeCustomer: null, activeDrink: null,
     // Ingredient selection
     selectedIngredients: [],
@@ -758,7 +879,7 @@ function drawCustomer(customer) {
         ctx.font = '800 16px Nunito, sans-serif';
         ctx.fillStyle = '#06d6a0';
         ctx.textAlign = 'center';
-        ctx.fillText('Thank you!', cx, cy - 50 * scale - customer.servedTimer * 0.5);
+        ctx.fillText(T().thankYou, cx, cy - 50 * scale - customer.servedTimer * 0.5);
         ctx.globalAlpha = 1;
         ctx.textAlign = 'left';
     }
@@ -853,7 +974,7 @@ function drawOrderBubble(x, y, customer) {
     ctx.fillText(drink.name, bx + padding + 16, by + 18);
 
     // Method badge (SHAKE / LAYER / STIR)
-    const methodLabel = drink.method.toUpperCase();
+    const methodLabel = { shake: T().methodShake, layer: T().methodLayer, stir: T().methodStir }[drink.method] || drink.method;
     ctx.font = '700 7px Nunito, sans-serif';
     const badgeW = ctx.measureText(methodLabel).width + 8;
     const badgeX = bx + bw - padding - badgeW;
@@ -981,16 +1102,16 @@ function updateMixButton() {
 
     if (match) {
         mixBtn.disabled = false;
-        hint.textContent = `Recipe match: ${match.name}!`;
+        hint.textContent = T().recipeMatch(match.name);
         hint.style.color = '#06d6a0';
     } else if (game.selectedIngredients.length > 0) {
         // Check partial matches
         const partial = findPartialMatch(game.selectedIngredients);
         if (partial) {
-            hint.textContent = `Could be: ${partial.name}...`;
+            hint.textContent = T().couldBe(partial.name);
             hint.style.color = '#ffd166';
         } else {
-            hint.textContent = 'No matching recipe...';
+            hint.textContent = T().noMatch;
             hint.style.color = '#e85d04';
         }
         mixBtn.disabled = false; // Allow mixing even imperfect drinks
@@ -999,10 +1120,10 @@ function updateMixButton() {
         // Show order hint if customer is selected
         const sel = game.customers.find(c => c.selected && c.state === 'waiting');
         if (sel) {
-            hint.textContent = `Order: ${sel.drink.ingredients.map(id => INGREDIENTS[id]?.name).join(' + ')}`;
+            hint.textContent = `${T().orderHint}${sel.drink.ingredients.map(id => INGREDIENTS[id]?.name).join(' + ')}`;
             hint.style.color = '#ffd166';
         } else {
-            hint.textContent = 'Tap a customer, then add ingredients';
+            hint.textContent = T().tapCustomer;
             hint.style.color = '#888';
         }
     }
@@ -1089,7 +1210,7 @@ function startMixing(customer) {
     game.mixingType = customer.drink.method;
     game.mixingProgress = 0;
     game.mixingTimer = 0;
-    game.mixingMaxTime = 600;
+    game.mixingMaxTime = 900;
     game.mixingComplete = false;
     game._perfectTimer = undefined;
     game.state = 'mixing';
@@ -1106,9 +1227,9 @@ function startMixing(customer) {
     document.getElementById('ingredient-panel').style.display = 'none';
 
     const instrMap = {
-        shake: '📱 Shake your phone!',
-        layer: '📐 Tilt slowly to pour!',
-        stir: '🔄 Stir gently!',
+        shake: T().shakeInstr,
+        layer: T().layerInstr,
+        stir: T().stirInstr,
     };
 
     document.getElementById('mixing-drink-name').textContent = customer.drink.name;
@@ -1139,12 +1260,12 @@ function updateMixing() {
     if (game.mixingType === 'layer') {
         const drink = game.activeDrink;
         if (game.currentLayer < drink.layers.length) {
-            status.textContent = `Layer ${game.currentLayer + 1}/${drink.layers.length}: ${drink.layers[game.currentLayer].name}`;
-            document.getElementById('mixing-instruction').textContent = `📐 Tilt to pour: ${drink.layers[game.currentLayer].name}`;
+            status.textContent = T().layerStatus(game.currentLayer + 1, drink.layers.length, drink.layers[game.currentLayer].name);
+            document.getElementById('mixing-instruction').textContent = `${T().layerPour}${drink.layers[game.currentLayer].name}`;
         }
     } else {
         const pct = Math.floor(game.mixingProgress);
-        status.textContent = pct < 70 ? 'Keep going...' : pct <= 100 ? 'Sweet spot!' : 'Too much!';
+        status.textContent = pct < 70 ? T().statusKeep : pct <= 100 ? T().statusGood : T().statusTooMuch;
     }
 
     drawMixingAnimation();
@@ -1239,10 +1360,10 @@ function completeMixing() {
 
     // Rating
     let rating, ratingEmoji, ratingColor;
-    if (totalQuality >= 0.85) { rating = 'PERFECT'; ratingEmoji = '🌟'; ratingColor = '#ffd166'; }
-    else if (totalQuality >= 0.65) { rating = 'Great!'; ratingEmoji = '😊'; ratingColor = '#06d6a0'; }
-    else if (totalQuality >= 0.4) { rating = 'Not Bad'; ratingEmoji = '😐'; ratingColor = '#ffa500'; }
-    else { rating = 'Yikes...'; ratingEmoji = '😰'; ratingColor = '#e85d04'; }
+    if (totalQuality >= 0.85) { rating = T().ratingPerfect; ratingEmoji = '🌟'; ratingColor = '#ffd166'; }
+    else if (totalQuality >= 0.65) { rating = T().ratingGreat; ratingEmoji = '😊'; ratingColor = '#06d6a0'; }
+    else if (totalQuality >= 0.4) { rating = T().ratingOk; ratingEmoji = '😐'; ratingColor = '#ffa500'; }
+    else { rating = T().ratingBad; ratingEmoji = '😰'; ratingColor = '#e85d04'; }
 
     // Earnings
     const basePrice = game.activeDrink.price;
@@ -1270,9 +1391,9 @@ function showResult(rating, emoji, color, earnings, tip, total, ingAcc, mixQ) {
     document.getElementById('result-drink-name').textContent = game.activeDrink.name;
     document.getElementById('result-drink-name').style.color = color;
     document.getElementById('result-earnings').textContent = `+$${earnings}`;
-    document.getElementById('result-tip').textContent = tip > 0 ? `Tip: +$${tip}` : '';
+    document.getElementById('result-tip').textContent = tip > 0 ? `${T().tip}：+$${tip}` : '';
     document.getElementById('result-detail').textContent =
-        `Ingredients: ${Math.round(ingAcc * 100)}% · Mixing: ${Math.round(mixQ * 100)}%`;
+        `${T().ingredients}：${Math.round(ingAcc * 100)}% · ${T().mixing}：${Math.round(mixQ * 100)}%`;
 
     document.getElementById('result-ok-btn').onclick = () => {
         overlay.style.display = 'none';
@@ -1493,16 +1614,14 @@ function endShift() {
     const overlay = document.getElementById('shift-end-overlay');
     overlay.style.display = 'flex';
 
-    document.getElementById('shift-end-title').textContent = `Shift ${game.shift} Complete`;
+    document.getElementById('shift-end-title').textContent = T().shiftEnd(game.shift);
 
-    const unlockMsg = game.shift < 3
-        ? 'New drinks unlock next shift!'
-        : 'Full menu unlocked!';
+    const unlockMsg = game.shift < 3 ? T().unlockNext : T().unlockAll;
 
     document.getElementById('shift-end-stats').innerHTML = `
-        <div class="stat-row highlight"><span>Earned</span><span class="stat-val">$${game.shiftMoney}</span></div>
-        <div class="stat-row"><span>Drinks served</span><span class="stat-val">${game.shiftServed}</span></div>
-        <div class="stat-row"><span>Total bank</span><span class="stat-val">$${game.money}</span></div>
+        <div class="stat-row highlight"><span>${T().earned}</span><span class="stat-val">$${game.shiftMoney}</span></div>
+        <div class="stat-row"><span>${T().drinksServed}</span><span class="stat-val">${game.shiftServed}</span></div>
+        <div class="stat-row"><span>${T().totalBank}</span><span class="stat-val">$${game.money}</span></div>
         <div class="stat-row unlock">${unlockMsg}</div>
     `;
 
@@ -1518,7 +1637,7 @@ function startNextShift() {
     game.shiftServed = 0;
     game.shiftTarget = 6 + game.shift * 2;
     game.customersSpawned = 0;
-    game.spawnInterval = Math.max(120, 260 - game.shift * 20);
+    game.spawnInterval = Math.max(180, 360 - game.shift * 25);
     game.spawnTimer = 0;
     game.customers = [];
     game.selectedIngredients = [];
@@ -1526,7 +1645,7 @@ function startNextShift() {
     updateAvailableDrinks();
     game.state = 'playing';
     document.getElementById('ingredient-panel').style.display = 'block';
-    document.getElementById('shift-display').textContent = `Shift ${game.shift}`;
+    document.getElementById('shift-display').textContent = T().shiftN(game.shift);
     document.getElementById('served-display').textContent = `0 / ${game.shiftTarget}`;
     updateSelectedDisplay();
     updateMixButton();
@@ -1631,6 +1750,19 @@ function gameLoop() {
 //  INITIALIZATION
 // ============================================================
 function init() {
+    // Apply default language
+    applyLanguage();
+
+    // Language switch buttons
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            currentLang = btn.dataset.lang;
+            applyLanguage();
+        });
+    });
+
     document.getElementById('permission-btn').addEventListener('click', async () => {
         await requestMotionPermission();
         document.getElementById('permission-overlay').style.display = 'none';
@@ -1677,7 +1809,7 @@ function startGame() {
 
     document.getElementById('hud').style.display = 'block';
     document.getElementById('ingredient-panel').style.display = 'block';
-    document.getElementById('shift-display').textContent = 'Shift 1';
+    document.getElementById('shift-display').textContent = T().shiftN(1);
     document.getElementById('served-display').textContent = `0 / ${game.shiftTarget}`;
     updateMixButton();
 }

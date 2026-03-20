@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="mobile-web-app-capable" content="yes">
-    <title>Bar Master Ver1</title>
+    <title>调酒大师 Ver1</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -16,25 +16,29 @@
         <!-- Permission overlay for iOS motion sensors -->
         <div id="permission-overlay" class="overlay" style="display:none">
             <div class="overlay-card">
-                <h2>Motion Sensors</h2>
-                <p>This game uses your phone's sensors for mixing drinks!</p>
-                <button id="permission-btn" class="btn btn-primary">Enable Motion</button>
-                <button id="skip-perm-btn" class="btn btn-ghost">Play Without Motion</button>
+                <h2>体感控制</h2>
+                <p>本游戏需要使用手机传感器来调酒哦！</p>
+                <button id="permission-btn" class="btn btn-primary">开启体感</button>
+                <button id="skip-perm-btn" class="btn btn-ghost">不使用体感</button>
             </div>
         </div>
 
         <!-- Start screen -->
         <div id="start-screen" class="overlay">
             <div class="start-content">
-                <div class="logo">BAR MASTER</div>
-                <div class="version">Ver1</div>
-                <div class="tagline">shake · tilt · stir</div>
-                <div class="start-features">
-                    <div class="feature">📱 Shake to mix cocktails</div>
-                    <div class="feature">📐 Tilt to layer drinks</div>
-                    <div class="feature">🔄 Rotate to stir</div>
+                <div id="lang-switch">
+                    <button class="lang-btn active" data-lang="zh">中文</button>
+                    <button class="lang-btn" data-lang="en">EN</button>
                 </div>
-                <button id="start-btn" class="btn btn-primary btn-lg">Start Shift</button>
+                <div class="logo">调酒大师</div>
+                <div class="version">Ver1</div>
+                <div class="tagline">摇 · 倾 · 搅</div>
+                <div class="start-features">
+                    <div class="feature">📱 摇晃手机来调制鸡尾酒</div>
+                    <div class="feature">📐 倾斜手机制作分层特饮</div>
+                    <div class="feature">🔄 转动手机轻柔搅拌</div>
+                </div>
+                <button id="start-btn" class="btn btn-primary btn-lg">开始营业</button>
             </div>
         </div>
 
@@ -53,16 +57,16 @@
             <div id="selected-ingredients"></div>
             <div id="ingredient-categories">
                 <div class="cat-tabs">
-                    <button class="cat-tab active" data-cat="spirits">Spirits</button>
-                    <button class="cat-tab" data-cat="liqueurs">Liqueurs</button>
-                    <button class="cat-tab" data-cat="mixers">Mixers</button>
-                    <button class="cat-tab" data-cat="extras">Extras</button>
+                    <button class="cat-tab active" data-cat="spirits">基酒</button>
+                    <button class="cat-tab" data-cat="liqueurs">利口酒</button>
+                    <button class="cat-tab" data-cat="mixers">调配</button>
+                    <button class="cat-tab" data-cat="extras">辅料</button>
                 </div>
                 <div id="ingredient-grid"></div>
             </div>
             <div id="panel-actions">
-                <button id="mix-btn" class="btn btn-accent" disabled>Mix It!</button>
-                <button id="clear-btn" class="btn btn-danger-sm">Clear</button>
+                <button id="mix-btn" class="btn btn-accent" disabled>开始调酒</button>
+                <button id="clear-btn" class="btn btn-danger-sm">清空</button>
             </div>
         </div>
 
@@ -88,7 +92,7 @@
                 <div id="result-earnings"></div>
                 <div id="result-tip"></div>
                 <div id="result-detail"></div>
-                <button id="result-ok-btn" class="btn btn-primary">Continue</button>
+                <button id="result-ok-btn" class="btn btn-primary">继续</button>
             </div>
         </div>
 
@@ -97,7 +101,7 @@
             <div class="overlay-card shift-card">
                 <h2 id="shift-end-title"></h2>
                 <div id="shift-end-stats"></div>
-                <button id="next-shift-btn" class="btn btn-primary btn-lg">Next Shift</button>
+                <button id="next-shift-btn" class="btn btn-primary btn-lg">下一班</button>
             </div>
         </div>
     </div>
