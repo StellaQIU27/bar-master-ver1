@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="mobile-web-app-capable" content="yes">
+    <title>Bar Master Ver1</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div id="game-container">
+        <canvas id="gameCanvas"></canvas>
+
+        <!-- Permission overlay for iOS motion sensors -->
+        <div id="permission-overlay" class="overlay" style="display:none">
+            <div class="overlay-card">
+                <h2>Motion Sensors</h2>
+                <p>This game uses your phone's sensors for mixing drinks!</p>
+                <button id="permission-btn" class="btn btn-primary">Enable Motion</button>
+                <button id="skip-perm-btn" class="btn btn-ghost">Play Without Motion</button>
+            </div>
+        </div>
+
+        <!-- Start screen -->
+        <div id="start-screen" class="overlay">
+            <div class="start-content">
+                <div class="logo">BAR MASTER</div>
+                <div class="version">Ver1</div>
+                <div class="tagline">shake · tilt · stir</div>
+                <div class="start-features">
+                    <div class="feature">📱 Shake to mix cocktails</div>
+                    <div class="feature">📐 Tilt to layer drinks</div>
+                    <div class="feature">🔄 Rotate to stir</div>
+                </div>
+                <button id="start-btn" class="btn btn-primary btn-lg">Start Shift</button>
+            </div>
+        </div>
+
+        <!-- HUD -->
+        <div id="hud" style="display:none">
+            <div id="hud-bar">
+                <span id="money-display">$0</span>
+                <span id="shift-display">Shift 1</span>
+                <span id="served-display">0 / 6</span>
+            </div>
+        </div>
+
+        <!-- Ingredient selection panel -->
+        <div id="ingredient-panel" style="display:none">
+            <div id="recipe-hint"></div>
+            <div id="selected-ingredients"></div>
+            <div id="ingredient-categories">
+                <div class="cat-tabs">
+                    <button class="cat-tab active" data-cat="spirits">Spirits</button>
+                    <button class="cat-tab" data-cat="liqueurs">Liqueurs</button>
+                    <button class="cat-tab" data-cat="mixers">Mixers</button>
+                    <button class="cat-tab" data-cat="extras">Extras</button>
+                </div>
+                <div id="ingredient-grid"></div>
+            </div>
+            <div id="panel-actions">
+                <button id="mix-btn" class="btn btn-accent" disabled>Mix It!</button>
+                <button id="clear-btn" class="btn btn-danger-sm">Clear</button>
+            </div>
+        </div>
+
+        <!-- Mixing overlay -->
+        <div id="mixing-overlay" class="overlay" style="display:none">
+            <div class="mixing-content">
+                <div id="mixing-drink-name"></div>
+                <div id="mixing-instruction"></div>
+                <canvas id="mixingCanvas" width="240" height="240"></canvas>
+                <div id="mixing-meter">
+                    <div id="mixing-meter-fill"></div>
+                    <div id="mixing-meter-zone"></div>
+                </div>
+                <div id="mixing-status"></div>
+            </div>
+        </div>
+
+        <!-- Result overlay -->
+        <div id="result-overlay" class="overlay" style="display:none">
+            <div class="overlay-card result-card">
+                <div id="result-rating"></div>
+                <div id="result-drink-name"></div>
+                <div id="result-earnings"></div>
+                <div id="result-tip"></div>
+                <div id="result-detail"></div>
+                <button id="result-ok-btn" class="btn btn-primary">Continue</button>
+            </div>
+        </div>
+
+        <!-- Shift end overlay -->
+        <div id="shift-end-overlay" class="overlay" style="display:none">
+            <div class="overlay-card shift-card">
+                <h2 id="shift-end-title"></h2>
+                <div id="shift-end-stats"></div>
+                <button id="next-shift-btn" class="btn btn-primary btn-lg">Next Shift</button>
+            </div>
+        </div>
+    </div>
+    <script src="js/game.js"></script>
+</body>
+</html>
